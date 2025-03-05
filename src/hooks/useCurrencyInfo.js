@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 
 /**
- * 
- * @param {*} curency 
+ * Custom Hook for fetching the exchange rates on change of currency
+ * @param {string} currency 
+ * @returns {Object} data containing exchange rates
  */
 function useCurrencyInfo(curency) {
 
@@ -10,11 +11,13 @@ function useCurrencyInfo(curency) {
 
     useEffect(()=>{
         fetch(`https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${curency}.json`)
-        .then((res)=> res.json())
+        .then((res) => res.json())
         .then((res) => setData({date: res.date, exchange: res[curency]}))
-        console.log(data);
-        return data;
-    },[])
+        .catch(error => console.error('Error fetching currency data:', error));;
+        
+    },[curency]);
+
+    return data;
 
 }
 

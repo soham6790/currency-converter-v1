@@ -3,10 +3,11 @@ import { useState } from 'react';
 import './App.css'
 import { InputCard } from './components'
 import { useCurrencyInfo } from './hooks/useCurrencyInfo';
+import backgroundImage from './assets/Gemini_Generated_BackgroundImage.jpeg';
+
 
 function App() {
 
-  const backgroundImage = './assets/Gemini_Generated_BackgroundImage.jpeg';
   const [amount, setAmount] = useState(0);
   const [from, setFrom] = useState("usd");
   const [to, setTo] = useState("inr");
@@ -18,13 +19,11 @@ function App() {
   const swap = () => {
     setFrom(to);
     setTo(from);
-    setConvertedAmount
   }
 
   const convert = () => {
     setConvertedAmount(amount * currencyInfo.exchange[to]);
   }
-
 
   return (
     <div
@@ -43,11 +42,11 @@ function App() {
             }}
           >
             <div className="w-full mb-1">
-              <InputBox
+              <InputCard
                 label="From"
                 amount={amount}
                 currencyOptions={options}
-                onCurrencyChange={(currency) => setAmount(amount)}
+                onCurrencyChange={(currency) => setFrom(currency)}
                 selectCurrency={from}
                 onAmountChange={(amount) => setAmount(amount)}
               />
@@ -62,12 +61,12 @@ function App() {
               </button>
             </div>
             <div className="w-full mt-1 mb-4">
-              <InputBox
+              <InputCard
                 label="To"
                 amount={convertedAmount}
                 currencyOptions={options}
                 onCurrencyChange={(currency) => setTo(currency)}
-                selectCurrency={from}
+                selectCurrency={to}
                 amountDisable
               />
             </div>
